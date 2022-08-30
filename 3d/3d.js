@@ -1,6 +1,8 @@
 import * as THREE from "three"
 import { yelp, initCanvas, initRenderer, initCamera, initScene } from "./init"
 import * as station from "./obj/station"
+import * as testLight from "./lights/testLight"
+import * as sunLight from "./lights/sunLight"
 
 // Initialization
 const canvas = initCanvas()
@@ -12,9 +14,17 @@ const scene = initScene()
 const stationCore = station.build()
 scene.add(stationCore)
 
+console.log(stationCore)
+
+// Lights
+const testAmbLight = testLight.build()
+const testSunLight = sunLight.build()
+scene.add(testAmbLight, testSunLight)
+console.log(testAmbLight)
+
 // Update Objects
 function update() {
-    station.update(stationCore)
+    station.update(stationCore.children[0])
 }
 
 // Render Loop

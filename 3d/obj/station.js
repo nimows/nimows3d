@@ -1,25 +1,59 @@
 import * as THREE from "three"
 
 function build() {
+    const stationController = buildStationController()
     const stationCore = buildStationCore()
+    const stationMainDeck = buildStationMainDeck()
+
+    stationCore.add(stationMainDeck)
+    stationController.add(stationCore)
     
-    return stationCore
+    return stationController
 }
 
 function update(station) {
-    station.rotation.y += 0.005
+    station.rotation.y += 0.001
 }
+
+// Design Constants
+const coreColor = 0x404040
+
+// Object Controller
+function buildStationController() {
+    const geo = new THREE.SphereGeometry(1)
+    const mat = new THREE.MeshBasicMaterial()
+    const controller = new THREE.Mesh(geo, mat)
+
+    controller.rotation.set(0, .2, .2)
+
+    return controller
+}
+
+// Build Functions
+function buildStationCore() {
+    const segs = 100
+
+    const geo = new THREE.CylinderGeometry(4, 4, 8, segs)
+    const mat = new THREE.MeshPhysicalMaterial()
+    mat.color = new THREE.Color(coreColor)
+    const core = new THREE.Mesh(geo, mat)
+    core.name = "stationCore"
+
+    return core
+}
+
 /*
  * TO DO:
  * Make it so the top and bot cylinders change according to the height
  * of the middle cylinder
 */
-function buildStationCore() {
+function buildStationMainDeck() {
     const segs = 10
 
-    const geoCore = new THREE.CylinderGeometry(10, 10, 2, segs)
-    const mat = new THREE.MeshNormalMaterial()
-    const core = new THREE.Mesh(geoCore, mat)
+    const geoDeck = new THREE.CylinderGeometry(10, 10, 2, segs)
+    const mat = new THREE.MeshPhysicalMaterial()
+    mat.color = new THREE.Color(coreColor)
+    const deck = new THREE.Mesh(geoDeck, mat)
     
     const geoTop = new THREE.CylinderGeometry(5, 10, 2, segs)
     const top = new THREE.Mesh(geoTop, mat)
@@ -29,9 +63,9 @@ function buildStationCore() {
     const bot = new THREE.Mesh(geoBot, mat)
     bot.position.y = -2
 
-    core.add(top, bot)
+    deck.add(top, bot)
 
-    return core
+    return deck
 }
 
 export { build, update }
