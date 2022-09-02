@@ -20,7 +20,9 @@ console.log(stationCore)
 const testAmbLight = testLight.build()
 const testSunLight = sunLight.build()
 scene.add(testAmbLight, testSunLight)
-console.log(testAmbLight)
+
+// Console Log
+console.log(scene)
 
 // Update Objects
 function update() {

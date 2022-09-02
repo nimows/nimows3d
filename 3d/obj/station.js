@@ -17,6 +17,10 @@ function update(station) {
 
 // Design Constants
 const coreColor = 0x404040
+const coreMat = new THREE.MeshPhysicalMaterial()
+coreMat.metalness = 0
+coreMat.reflectivity = 1
+coreMat.clearcoat = 0.3
 
 // Object Controller
 function buildStationController() {
@@ -34,7 +38,7 @@ function buildStationCore() {
     const segs = 100
 
     const geo = new THREE.CylinderGeometry(4, 4, 8, segs)
-    const mat = new THREE.MeshPhysicalMaterial()
+    const mat = coreMat
     mat.color = new THREE.Color(coreColor)
     const core = new THREE.Mesh(geo, mat)
     core.name = "stationCore"
@@ -51,7 +55,7 @@ function buildStationMainDeck() {
     const segs = 10
 
     const geoDeck = new THREE.CylinderGeometry(10, 10, 2, segs)
-    const mat = new THREE.MeshPhysicalMaterial()
+    const mat = coreMat
     mat.color = new THREE.Color(coreColor)
     const deck = new THREE.Mesh(geoDeck, mat)
     
